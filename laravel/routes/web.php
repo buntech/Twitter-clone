@@ -1,3 +1,5 @@
 <?php
 
-Route::get('/', 'ArticleController@index');  //(URL, コントローラー@メソッド)
+Auth::routes();
+Route::get('/', 'ArticleController@index')->name('articles.index');  //(URL, コントローラー@メソッド)
+Route::resource('/articles', 'ArticleController')->except(['index']);

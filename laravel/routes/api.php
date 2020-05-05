@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+// Laravelをインストールした時点で存在 今回は使用しない
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
