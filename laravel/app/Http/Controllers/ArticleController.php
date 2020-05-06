@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Article::class, 'article');
+    }
+
     public function index()
     {
         $articles = Article::all()->sortByDesc('created_at');
@@ -30,6 +35,23 @@ class ArticleController extends Controller
 
     public function edit(Article $article)  // アクションメソッド(引数)
     {
-        return view('article.edit', ['article' => $article]);  // viewメソッド('ビュー', ['キー'=>変数])
+        return view('articles.edit', ['article' => $article]);  // viewメソッド('ビュー', ['キー'=>変数])
+    }
+
+    public function update(ArticleRequest $request, Article $article)
+    {
+        $article->fill($request->all())->save();
+        return redirect()->route('articles.index');
+    }
+
+    public function destroy(Article $article)
+    {
+        $article->delete();
+        return redirect()->route('articles.index');
+    }
+
+    public function show(Article $article)
+    {
+        return view('articles.show', ['article' => $article]);
     }
 }
