@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Article;
 use App\Tag;
 use App\Http\Requests\ArticleRequest;
-use Illuminate\Support\Facades\Auth;
+// use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -71,13 +71,14 @@ class ArticleController extends Controller
     public function update(ArticleRequest $request, Article $article)
     {
         $article->fill($request->all())->save();
-        return redirect()->route('articles.index');
 
         $article->tags()->detach();
         $request->tags->each(function ($tagName) use ($article) {
             $tag = Tag::firstOrCreate(['name' => $tagName]);
             $article->tags()->attach($tag);
         });
+
+        return redirect()->route('articles.index');
     }
 
     public function destroy(Article $article)
